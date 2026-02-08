@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Joint Angle Comparator</title>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/pose.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1675466862/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3.1675466124/drawing_utils.js" crossorigin="anonymous"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 16px;
+            padding-bottom: 100px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 0.85rem;
+            color: #8892b0;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .photo-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .photo-card.has-result {
+            border-color: rgba(0, 217, 255, 0.5);
+        }
+
+        .photo-card h3 {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            color: #ccd6f6;
+            text-align: center;
+        }
+
+        .photo-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .photo-container canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+        }
+
+        .placeholder svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 8px;
+            opacity: 0.5;
+        }
+
+        .placeholder span {
+            font-size: 0.75rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px 8px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00d9ff, #0099cc);
+            color: #000;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .angle-display {
+            text-align: center;
+            padding: 8px;
+            background: rgba(0, 217, 255, 0.1);
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .angle-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00d9ff;
+        }
+
+        .angle-label {
+            font-size: 0.7rem;
+            color: #8892b0;
+            text-transform: uppercase;
+        }
+
+        .comparison-card {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 255, 136, 0.1));
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .comparison-card h3 {
+            font-size: 1rem;
+            color: #ccd6f6;
+            margin-bottom: 16px;
+        }
+
+        .comparison-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 16px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .stat-value.photo1 { color: #00d9ff; }
+        .stat-value.photo2 { color: #ff6b9d; }
+        .stat-value.diff { color: #00ff88; }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: #8892b0;
+            text-transform: uppercase;
+        }
+
+        .difference-bar {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px 16px;
+        }
+
+        .difference-bar .big-diff {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00ff88;
+        }
+
+        .difference-bar .diff-label {
+            font-size: 0.8rem;
+            color: #8892b0;
+        }
+
+        .selector-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .selector-row {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .selector-label {
+            font-size: 0.75rem;
+            color: #8892b0;
+            text-transform: uppercase;
+            min-width: 50px;
+            text-align: right;
+        }
+
+        .selector-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .selector-btn {
+            padding: 8px 16px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            color: #ccd6f6;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .selector-btn.active {
+            border-color: #00d9ff;
+            background: rgba(0, 217, 255, 0.2);
+            color: #00d9ff;
+        }
+
+        .selector-btn.joint-knee.active {
+            border-color: #ff6b9d;
+            background: rgba(255, 107, 157, 0.2);
+            color: #ff6b9d;
+        }
+
+        .selector-btn .icon {
+            font-size: 1rem;
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .instructions h4 {
+            font-size: 0.9rem;
+            color: #00d9ff;
+            margin-bottom: 8px;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+            font-size: 0.8rem;
+            color: #8892b0;
+            line-height: 1.6;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .loading-overlay.hidden {
+            display: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(0, 217, 255, 0.3);
+            border-top-color: #00d9ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 16px;
+            color: #ccd6f6;
+            font-size: 0.9rem;
+        }
+
+        .camera-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .camera-modal.hidden {
+            display: none;
+        }
+
+        .camera-preview {
+            flex: 1;
+            position: relative;
+        }
+
+        .camera-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .camera-controls {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .capture-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #fff;
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .capture-btn:active {
+            transform: scale(0.9);
+            background: #ccc;
+        }
+
+        .close-camera {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .switch-camera {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .switch-camera svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .error-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff4757;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            z-index: 2000;
+            animation: slideUp 0.3s ease;
+        }
+
+        .error-toast.hidden {
+            display: none;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .reset-btn {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255, 71, 87, 0.2);
+            border: 2px solid rgba(255, 71, 87, 0.5);
+            color: #ff4757;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .reset-btn:active {
+            transform: scale(0.98);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        @media (min-width: 600px) {
+            body {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📐 Joint Angle Comparator</h1>
+        <p>Measure and compare elbow or knee angles from two photos</p>
+    </div>
+
+    <div class="selector-group">
+        <div class="selector-row">
+            <span class="selector-label">Joint:</span>
+            <div class="selector-buttons" id="jointSelector">
+                <button class="selector-btn joint-elbow active" data-joint="elbow">
+                    <span class="icon">💪</span> Elbow
+                </button>
+                <button class="selector-btn joint-knee" data-joint="knee">
+                    <span class="icon">🦵</span> Knee
+                </button>
+            </div>
+        </div>
+        <div class="selector-row">
+            <span class="selector-label">Side:</span>
+            <div class="selector-buttons" id="sideSelector">
+                <button class="selector-btn active" data-side="left">Left</button>
+                <button class="selector-btn" data-side="right">Right</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="instructions">
+        <h4>📸 How to use:</h4>
+        <ol>
+            <li>Select joint type (elbow or knee) and side</li>
+            <li>Take or upload a photo for Position 1</li>
+            <li>Take or upload a photo for Position 2</li>
+            <li>View the angle comparison below!</li>
+        </ol>
+    </div>
+
+    <div class="photo-grid">
+        <div class="photo-card" id="card1">
+            <h3>📷 Photo 1</h3>
+            <div class="photo-container" id="container1">
+                <canvas id="canvas1"></canvas>
+                <div class="placeholder" id="placeholder1">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    <span>Tap to add photo</span>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="openCamera(1)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                        <circle cx="12" cy="13" r="4"/>
+                    </svg>
+                    Camera
+                </button>
+                <button class="btn btn-secondary" onclick="document.getElementById('upload1').click()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    Upload
+                </button>
+            </div>
+            <input type="file" id="upload1" accept="image/*" onchange="handleUpload(1, event)">
+            <div class="angle-display" id="angle1" style="display: none;">
+                <div class="angle-value" id="angleValue1">--°</div>
+                <div class="angle-label" id="angleLabel1">Joint Angle</div>
+            </div>
+        </div>
+
+        <div class="photo-card" id="card2">
+            <h3>📷 Photo 2</h3>
+            <div class="photo-container" id="container2">
+                <canvas id="canvas2"></canvas>
+                <div class="placeholder" id="placeholder2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    <span>Tap to add photo</span>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="openCamera(2)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                        <circle cx="12" cy="13" r="4"/>
+                    </svg>
+                    Camera
+                </button>
+                <button class="btn btn-secondary" onclick="document.getElementById('upload2').click()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    Upload
+                </button>
+            </div>
+            <input type="file" id="upload2" accept="image/*" onchange="handleUpload(2, event)">
+            <div class="angle-display" id="angle2" style="display: none;">
+                <div class="angle-value" id="angleValue2">--°</div>
+                <div class="angle-label" id="angleLabel2">Joint Angle</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comparison-card" id="comparisonCard" style="display: none;">
+        <h3 id="comparisonTitle">📊 Angle Comparison</h3>
+        <div class="comparison-stats">
+            <div class="stat">
+                <div class="stat-value photo1" id="statAngle1">--°</div>
+                <div class="stat-label">Photo 1</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value diff" id="statDiff">--°</div>
+                <div class="stat-label">Difference</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value photo2" id="statAngle2">--°</div>
+                <div class="stat-label">Photo 2</div>
+            </div>
+        </div>
+        <div class="difference-bar">
+            <div class="big-diff" id="bigDiff">--°</div>
+            <div class="diff-label" id="diffLabel">Range of Motion</div>
+        </div>
+    </div>
+
+    <button class="reset-btn" onclick="resetAll()">🔄 Reset All</button>
+
+    <div class="loading-overlay hidden" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text" id="loadingText">Loading pose detection...</div>
+    </div>
+
+    <div class="camera-modal hidden" id="cameraModal">
+        <div class="camera-preview">
+            <video id="cameraVideo" autoplay playsinline></video>
+        </div>
+        <div class="camera-controls">
+            <button class="close-camera" onclick="closeCamera()">✕</button>
+            <button class="capture-btn" onclick="capturePhoto()"></button>
+            <button class="switch-camera" onclick="switchCamera()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                    <path d="M9 13l3 3 3-3"/>
+                    <path d="M15 11l-3-3-3 3"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="error-toast hidden" id="errorToast"></div>
+
+    <script>
+        // State
+        let pose = null;
+        let currentPhotoSlot = null;
+        let selectedJoint = 'elbow';
+        let selectedSide = 'left';
+        let results = { 1: null, 2: null };
+        let cameraStream = null;
+        let facingMode = 'environment';
+
+        // MediaPipe Pose landmark indices
+        const LANDMARKS = {
+            elbow: {
+                left: { start: 11, middle: 13, end: 15 },   // shoulder → elbow → wrist
+                right: { start: 12, middle: 14, end: 16 }
+            },
+            knee: {
+                left: { start: 23, middle: 25, end: 27 },   // hip → knee → ankle
+                right: { start: 24, middle: 26, end: 28 }
+            }
+        };
+
+        // Joint-specific labels
+        const JOINT_LABELS = {
+            elbow: {
+                name: 'Elbow',
+                start: 'shoulder',
+                middle: 'elbow',
+                end: 'wrist',
+                icon: '💪'
+            },
+            knee: {
+                name: 'Knee',
+                start: 'hip',
+                middle: 'knee',
+                end: 'ankle',
+                icon: '🦵'
+            }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initPose();
+            setupSelectors();
+        });
+
+        function showLoading(text = 'Processing...') {
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+            document.getElementById('loadingText').textContent = text;
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.add('hidden');
+        }
+
+        function showError(message) {
+            const toast = document.getElementById('errorToast');
+            toast.textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3000);
+        }
+
+        async function initPose() {
+            showLoading('Loading pose detection model...');
+            
+            try {
+                pose = new Pose({
+                    locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/${file}`
+                });
+
+                pose.setOptions({
+                    modelComplexity: 1,
+                    smoothLandmarks: true,
+                    enableSegmentation: false,
+                    smoothSegmentation: false,
+                    minDetectionConfidence: 0.5,
+                    minTrackingConfidence: 0.5
+                });
+
+                pose.onResults(onPoseResults);
+
+                // Warm up the model
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = 100;
+                tempCanvas.height = 100;
+                await pose.send({ image: tempCanvas });
+
+                hideLoading();
+            } catch (error) {
+                hideLoading();
+                showError('Failed to load pose detection. Please refresh.');
+                console.error('Pose init error:', error);
+            }
+        }
+
+        function setupSelectors() {
+            // Joint selector (elbow/knee)
+            document.querySelectorAll('#jointSelector .selector-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#jointSelector .selector-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedJoint = btn.dataset.joint;
+                    updateLabels();
+                    
+                    // Re-analyze existing photos with new joint selection
+                    if (results[1]?.image) processImage(results[1].image, 1);
+                    if (results[2]?.image) processImage(results[2].image, 2);
+                });
+            });
+
+            // Side selector (left/right)
+            document.querySelectorAll('#sideSelector .selector-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#sideSelector .selector-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedSide = btn.dataset.side;
+                    
+                    // Re-analyze existing photos with new side selection
+                    if (results[1]?.image) processImage(results[1].image, 1);
+                    if (results[2]?.image) processImage(results[2].image, 2);
+                });
+            });
+
+            updateLabels();
+        }
+
+        function updateLabels() {
+            const jointInfo = JOINT_LABELS[selectedJoint];
+            const capitalizedJoint = jointInfo.name;
+            
+            // Update angle display labels
+            document.getElementById('angleLabel1').textContent = `${capitalizedJoint} Angle`;
+            document.getElementById('angleLabel2').textContent = `${capitalizedJoint} Angle`;
+            
+            // Update comparison title
+            document.getElementById('comparisonTitle').textContent = `📊 ${capitalizedJoint} Angle Comparison`;
+        }
+
+        function getJointPartName() {
+            const jointInfo = JOINT_LABELS[selectedJoint];
+            return `${selectedSide.charAt(0).toUpperCase() + selectedSide.slice(1)} ${jointInfo.name.toLowerCase()}`;
+        }
+
+        function openCamera(slot) {
+            currentPhotoSlot = slot;
+            const modal = document.getElementById('cameraModal');
+            modal.classList.remove('hidden');
+            startCamera();
+        }
+
+        async function startCamera() {
+            try {
+                if (cameraStream) {
+                    cameraStream.getTracks().forEach(track => track.stop());
+                }
+
+                cameraStream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: facingMode, width: { ideal: 1280 }, height: { ideal: 960 } },
+                    audio: false
+                });
+
+                const video = document.getElementById('cameraVideo');
+                video.srcObject = cameraStream;
+            } catch (error) {
+                showError('Camera access denied. Please allow camera access.');
+                closeCamera();
+            }
+        }
+
+        function switchCamera() {
+            facingMode = facingMode === 'environment' ? 'user' : 'environment';
+            startCamera();
+        }
+
+        function closeCamera() {
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+            document.getElementById('cameraModal').classList.add('hidden');
+            currentPhotoSlot = null;
+        }
+
+        function capturePhoto() {
+            const video = document.getElementById('cameraVideo');
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0);
+            
+            const slot = currentPhotoSlot;
+            closeCamera();
+            
+            const img = new Image();
+            img.onload = () => processImage(img, slot);
+            img.src = canvas.toDataURL('image/jpeg', 0.9);
+        }
+
+        function handleUpload(slot, event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const img = new Image();
+            img.onload = () => processImage(img, slot);
+            img.src = URL.createObjectURL(file);
+        }
+
+        async function processImage(img, slot) {
+            if (!pose) {
+                showError('Pose detection not ready. Please wait...');
+                return;
+            }
+
+            const jointInfo = JOINT_LABELS[selectedJoint];
+            showLoading(`Detecting ${jointInfo.name.toLowerCase()} pose...`);
+
+            // Store image for re-analysis
+            results[slot] = { image: img, angle: null, landmarks: null };
+
+            // Create temp canvas for pose detection
+            const tempCanvas = document.createElement('canvas');
+            const maxSize = 640;
+            let width = img.width;
+            let height = img.height;
+            
+            if (width > height && width > maxSize) {
+                height = (height / width) * maxSize;
+                width = maxSize;
+            } else if (height > maxSize) {
+                width = (width / height) * maxSize;
+                height = maxSize;
+            }
+
+            tempCanvas.width = width;
+            tempCanvas.height = height;
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCtx.drawImage(img, 0, 0, width, height);
+
+            currentPhotoSlot = slot;
+            await pose.send({ image: tempCanvas });
+        }
+
+        function onPoseResults(poseResults) {
+            const slot = currentPhotoSlot;
+            if (!slot || !results[slot]) {
+                hideLoading();
+                return;
+            }
+
+            const landmarks = poseResults.poseLandmarks;
+            
+            if (!landmarks) {
+                hideLoading();
+                showError('No pose detected. Please ensure body is visible.');
+                return;
+            }
+
+            const indices = LANDMARKS[selectedJoint][selectedSide];
+            const jointInfo = JOINT_LABELS[selectedJoint];
+            
+            const startPoint = landmarks[indices.start];
+            const middlePoint = landmarks[indices.middle];
+            const endPoint = landmarks[indices.end];
+
+            // Check visibility
+            const minVisibility = 0.5;
+            if (startPoint.visibility < minVisibility || 
+                middlePoint.visibility < minVisibility || 
+                endPoint.visibility < minVisibility) {
+                hideLoading();
+                showError(`${getJointPartName()} not clearly visible. Try another angle.`);
+                return;
+            }
+
+            // Calculate angle
+            const angle = calculateAngle(startPoint, middlePoint, endPoint);
+            
+            results[slot].angle = angle;
+            results[slot].landmarks = { 
+                start: startPoint, 
+                middle: middlePoint, 
+                end: endPoint 
+            };
+            results[slot].jointType = selectedJoint;
+            results[slot].side = selectedSide;
+
+            drawResult(slot);
+            updateComparison();
+            hideLoading();
+        }
+
+        function calculateAngle(start, middle, end) {
+            const radians = Math.atan2(end.y - middle.y, end.x - middle.x) -
+                           Math.atan2(start.y - middle.y, start.x - middle.x);
+            
+            let angle = Math.abs(radians * 180 / Math.PI);
+            
+            if (angle > 180) {
+                angle = 360 - angle;
+            }
+            
+            return Math.round(angle);
+        }
+
+        function drawResult(slot) {
+            const result = results[slot];
+            const img = result.image;
+            const landmarks = result.landmarks;
+            const jointInfo = JOINT_LABELS[result.jointType || selectedJoint];
+            
+            const canvas = document.getElementById(`canvas${slot}`);
+            const container = document.getElementById(`container${slot}`);
+            const placeholder = document.getElementById(`placeholder${slot}`);
+            const card = document.getElementById(`card${slot}`);
+            
+            // Set canvas size to match container aspect ratio
+            const containerRect = container.getBoundingClientRect();
+            canvas.width = containerRect.width * window.devicePixelRatio;
+            canvas.height = containerRect.height * window.devicePixelRatio;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            
+            const displayWidth = containerRect.width;
+            const displayHeight = containerRect.height;
+            
+            // Calculate image fit
+            const imgAspect = img.width / img.height;
+            const containerAspect = displayWidth / displayHeight;
+            
+            let drawWidth, drawHeight, offsetX, offsetY;
+            
+            if (imgAspect > containerAspect) {
+                drawWidth = displayWidth;
+                drawHeight = displayWidth / imgAspect;
+                offsetX = 0;
+                offsetY = (displayHeight - drawHeight) / 2;
+            } else {
+                drawHeight = displayHeight;
+                drawWidth = displayHeight * imgAspect;
+                offsetX = (displayWidth - drawWidth) / 2;
+                offsetY = 0;
+            }
+
+            // Draw image
+            ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+
+            // Draw overlay
+            if (landmarks) {
+                const scaleX = drawWidth;
+                const scaleY = drawHeight;
+
+                const points = {
+                    start: { x: offsetX + landmarks.start.x * scaleX, y: offsetY + landmarks.start.y * scaleY },
+                    middle: { x: offsetX + landmarks.middle.x * scaleX, y: offsetY + landmarks.middle.y * scaleY },
+                    end: { x: offsetX + landmarks.end.x * scaleX, y: offsetY + landmarks.end.y * scaleY }
+                };
+
+                // Draw lines - color based on joint type
+                const lineColor = result.jointType === 'knee' ? '#ff6b9d' : '#00ff88';
+                ctx.strokeStyle = lineColor;
+                ctx.lineWidth = 3;
+                ctx.lineCap = 'round';
+
+                ctx.beginPath();
+                ctx.moveTo(points.start.x, points.start.y);
+                ctx.lineTo(points.middle.x, points.middle.y);
+                ctx.lineTo(points.end.x, points.end.y);
+                ctx.stroke();
+
+                // Draw points - different colors for each landmark
+                const colors = { start: '#00d9ff', middle: '#ff6b9d', end: '#ffbe0b' };
+                
+                Object.entries(points).forEach(([name, point]) => {
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, 8, 0, Math.PI * 2);
+                    ctx.fillStyle = colors[name];
+                    ctx.fill();
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                });
+
+                // Draw angle arc
+                const arcRadius = 25;
+                const startAngle = Math.atan2(points.start.y - points.middle.y, points.start.x - points.middle.x);
+                const endAngle = Math.atan2(points.end.y - points.middle.y, points.end.x - points.middle.x);
+                
+                ctx.beginPath();
+                ctx.arc(points.middle.x, points.middle.y, arcRadius, startAngle, endAngle);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Draw angle text
+                const textX = points.middle.x + Math.cos((startAngle + endAngle) / 2) * (arcRadius + 15);
+                const textY = points.middle.y + Math.sin((startAngle + endAngle) / 2) * (arcRadius + 15);
+                
+                ctx.font = 'bold 14px -apple-system, sans-serif';
+                ctx.fillStyle = '#fff';
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 3;
+                ctx.strokeText(`${result.angle}°`, textX - 15, textY + 5);
+                ctx.fillText(`${result.angle}°`, textX - 15, textY + 5);
+            }
+
+            // Update UI
+            placeholder.style.display = 'none';
+            card.classList.add('has-result');
+            
+            const angleDisplay = document.getElementById(`angle${slot}`);
+            const angleValue = document.getElementById(`angleValue${slot}`);
+            const angleLabel = document.getElementById(`angleLabel${slot}`);
+            angleDisplay.style.display = 'block';
+            angleValue.textContent = `${result.angle}°`;
+            angleLabel.textContent = `${jointInfo.name} Angle`;
+        }
+
+        function updateComparison() {
+            const comparisonCard = document.getElementById('comparisonCard');
+            
+            if (results[1]?.angle && results[2]?.angle) {
+                const angle1 = results[1].angle;
+                const angle2 = results[2].angle;
+                const diff = Math.abs(angle1 - angle2);
+
+                document.getElementById('statAngle1').textContent = `${angle1}°`;
+                document.getElementById('statAngle2').textContent = `${angle2}°`;
+                document.getElementById('statDiff').textContent = `${diff}°`;
+                document.getElementById('bigDiff').textContent = `${diff}°`;
+                
+                const diffLabel = document.getElementById('diffLabel');
+                if (diff < 5) {
+                    diffLabel.textContent = 'Nearly identical angles! ✨';
+                } else if (diff < 15) {
+                    diffLabel.textContent = 'Small difference in range';
+                } else if (diff < 30) {
+                    diffLabel.textContent = 'Moderate difference';
+                } else {
+                    diffLabel.textContent = 'Significant range of motion! 💪';
+                }
+
+                comparisonCard.style.display = 'block';
+            } else {
+                comparisonCard.style.display = 'none';
+            }
+        }
+
+        function resetAll() {
+            results = { 1: null, 2: null };
+            
+            [1, 2].forEach(slot => {
+                const canvas = document.getElementById(`canvas${slot}`);
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                document.getElementById(`placeholder${slot}`).style.display = 'flex';
+                document.getElementById(`angle${slot}`).style.display = 'none';
+                document.getElementById(`card${slot}`).classList.remove('has-result');
+                document.getElementById(`upload${slot}`).value = '';
+            });
+
+            document.getElementById('comparisonCard').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
