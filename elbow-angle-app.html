@@ -43,6 +43,151 @@
             color: #8892b0;
         }
 
+        /* Patient Management Section */
+        .patient-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            border: 2px solid rgba(0, 217, 255, 0.2);
+        }
+
+        .patient-section h3 {
+            font-size: 0.9rem;
+            color: #00d9ff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .patient-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .patient-select {
+            flex: 1;
+            min-width: 150px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .patient-select option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+
+        .patient-name-input {
+            flex: 1;
+            min-width: 150px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 2px solid rgba(0, 217, 255, 0.5);
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .patient-name-input::placeholder {
+            color: #64748b;
+        }
+
+        .btn-small {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+        }
+
+        .btn-new {
+            background: linear-gradient(135deg, #00d9ff, #0099cc);
+            color: #000;
+        }
+
+        .btn-danger {
+            background: rgba(255, 71, 87, 0.2);
+            border: 2px solid rgba(255, 71, 87, 0.5);
+            color: #ff4757;
+        }
+
+        .btn-small:active {
+            transform: scale(0.95);
+        }
+
+        .current-patient-info {
+            margin-top: 12px;
+            padding: 12px;
+            background: rgba(0, 217, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .patient-name-display {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #00d9ff;
+        }
+
+        .patient-stats {
+            font-size: 0.75rem;
+            color: #8892b0;
+        }
+
+        /* View Toggle */
+        .view-toggle {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .view-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            color: #ccd6f6;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .view-btn.active {
+            border-color: #00d9ff;
+            background: rgba(0, 217, 255, 0.2);
+            color: #00d9ff;
+        }
+
+        /* Views */
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+        }
+
         .photo-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -305,6 +450,290 @@
             line-height: 1.6;
         }
 
+        /* Save Visit Section */
+        .save-visit-section {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 217, 255, 0.1));
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .save-visit-section h3 {
+            font-size: 1rem;
+            color: #00ff88;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .visit-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .visit-stat {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .visit-stat-label {
+            font-size: 0.7rem;
+            color: #8892b0;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .visit-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00d9ff;
+        }
+
+        .btn-save-visit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            border: none;
+            color: #000;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-save-visit:active {
+            transform: scale(0.98);
+        }
+
+        .btn-save-visit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Visit History Section */
+        .history-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .history-section h3 {
+            font-size: 1rem;
+            color: #ccd6f6;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .history-empty {
+            text-align: center;
+            color: #64748b;
+            padding: 30px;
+            font-size: 0.9rem;
+        }
+
+        .visit-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .visit-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            border-left: 4px solid #00d9ff;
+        }
+
+        .visit-item:first-child {
+            border-left-color: #00ff88;
+        }
+
+        .visit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .visit-date {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ccd6f6;
+        }
+
+        .visit-badge {
+            font-size: 0.65rem;
+            padding: 4px 8px;
+            border-radius: 12px;
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+            font-weight: 600;
+        }
+
+        .visit-angles {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .visit-angle {
+            text-align: center;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .visit-angle-label {
+            font-size: 0.65rem;
+            color: #8892b0;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .visit-angle-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #00d9ff;
+        }
+
+        .visit-angle-value.extension { color: #00d9ff; }
+        .visit-angle-value.flexion { color: #ff6b9d; }
+        .visit-angle-value.rom { color: #00ff88; }
+
+        .visit-deltas {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .delta-badge {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .delta-badge.positive {
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+        }
+
+        .delta-badge.negative {
+            background: rgba(255, 71, 87, 0.2);
+            color: #ff4757;
+        }
+
+        .delta-badge.neutral {
+            background: rgba(255, 255, 255, 0.1);
+            color: #8892b0;
+        }
+
+        /* Progress Chart */
+        .progress-chart {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .chart-title {
+            font-size: 0.8rem;
+            color: #8892b0;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .chart-container {
+            height: 150px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            gap: 8px;
+            padding: 0 8px;
+        }
+
+        .chart-bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            max-width: 60px;
+        }
+
+        .chart-bars {
+            display: flex;
+            gap: 4px;
+            align-items: flex-end;
+            height: 100px;
+            margin-bottom: 8px;
+        }
+
+        .chart-bar {
+            width: 16px;
+            border-radius: 4px 4px 0 0;
+            transition: height 0.3s ease;
+        }
+
+        .chart-bar.extension {
+            background: linear-gradient(to top, #00d9ff, #00a8cc);
+        }
+
+        .chart-bar.flexion {
+            background: linear-gradient(to top, #ff6b9d, #cc5580);
+        }
+
+        .chart-label {
+            font-size: 0.6rem;
+            color: #64748b;
+            text-align: center;
+            max-width: 50px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.7rem;
+            color: #8892b0;
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+        }
+
+        .legend-dot.extension { background: #00d9ff; }
+        .legend-dot.flexion { background: #ff6b9d; }
+
+        /* Data Management */
+        .data-management {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -443,6 +872,24 @@
             display: none;
         }
 
+        .success-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #00cc6a;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            z-index: 2000;
+            animation: slideUp 0.3s ease;
+        }
+
+        .success-toast.hidden {
+            display: none;
+        }
+
         @keyframes slideUp {
             from {
                 opacity: 0;
@@ -475,6 +922,86 @@
             display: none;
         }
 
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.hidden {
+            display: none;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 400px;
+            width: 100%;
+            border: 2px solid rgba(0, 217, 255, 0.3);
+        }
+
+        .modal-title {
+            font-size: 1.1rem;
+            color: #ccd6f6;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+
+        .modal-input::placeholder {
+            color: #64748b;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .modal-btn.primary {
+            background: linear-gradient(135deg, #00d9ff, #0099cc);
+            color: #000;
+        }
+
+        .modal-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
         @media (min-width: 600px) {
             body {
                 max-width: 600px;
@@ -486,139 +1013,235 @@
 <body>
     <div class="header">
         <h1>📐 Joint Angle Comparator</h1>
-        <p>Measure and compare elbow or knee angles from two photos</p>
+        <p>Track patient progress with angle measurements</p>
     </div>
 
-    <div class="selector-group">
-        <div class="selector-row">
-            <span class="selector-label">Joint:</span>
-            <div class="selector-buttons" id="jointSelector">
-                <button class="selector-btn joint-elbow active" data-joint="elbow">
-                    <span class="icon">💪</span> Elbow
-                </button>
-                <button class="selector-btn joint-knee" data-joint="knee">
-                    <span class="icon">🦵</span> Knee
-                </button>
-            </div>
+    <!-- Patient Management Section -->
+    <div class="patient-section">
+        <h3>👤 Patient</h3>
+        <div class="patient-controls" id="patientControls">
+            <select class="patient-select" id="patientSelect" onchange="selectPatient()">
+                <option value="">Select a patient...</option>
+            </select>
+            <button class="btn-small btn-new" onclick="showNewPatientModal()">+ New</button>
         </div>
-        <div class="selector-row">
-            <span class="selector-label">Side:</span>
-            <div class="selector-buttons" id="sideSelector">
-                <button class="selector-btn active" data-side="left">Left</button>
-                <button class="selector-btn" data-side="right">Right</button>
+        <div class="current-patient-info hidden" id="currentPatientInfo">
+            <div>
+                <div class="patient-name-display" id="patientNameDisplay">--</div>
+                <div class="patient-stats" id="patientStats">No visits yet</div>
             </div>
+            <button class="btn-small btn-danger" onclick="deletePatient()">Delete</button>
         </div>
     </div>
 
-    <div class="instructions">
-        <h4>📸 How to use:</h4>
-        <ol>
-            <li>Select joint type (elbow or knee) and side</li>
-            <li>Take or upload a photo for Position 1</li>
-            <li>Take or upload a photo for Position 2</li>
-            <li>View the angle comparison below!</li>
-        </ol>
+    <!-- View Toggle -->
+    <div class="view-toggle" id="viewToggle" style="display: none;">
+        <button class="view-btn active" data-view="measure" onclick="switchView('measure')">📷 New Visit</button>
+        <button class="view-btn" data-view="history" onclick="switchView('history')">📊 History</button>
     </div>
 
-    <div class="photo-grid">
-        <div class="photo-card" id="card1">
-            <h3>📷 Photo 1</h3>
-            <div class="photo-container" id="container1">
-                <canvas id="canvas1"></canvas>
-                <div class="placeholder" id="placeholder1">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <polyline points="21 15 16 10 5 21"/>
-                    </svg>
-                    <span>Tap to add photo</span>
+    <!-- Measurement View -->
+    <div class="view active" id="measureView">
+        <div class="selector-group">
+            <div class="selector-row">
+                <span class="selector-label">Joint:</span>
+                <div class="selector-buttons" id="jointSelector">
+                    <button class="selector-btn joint-elbow active" data-joint="elbow">
+                        <span class="icon">💪</span> Elbow
+                    </button>
+                    <button class="selector-btn joint-knee" data-joint="knee">
+                        <span class="icon">🦵</span> Knee
+                    </button>
                 </div>
             </div>
-            <div class="btn-group">
-                <button class="btn btn-primary" onclick="openCamera(1)">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                        <circle cx="12" cy="13" r="4"/>
-                    </svg>
-                    Camera
-                </button>
-                <button class="btn btn-secondary" onclick="document.getElementById('upload1').click()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="17 8 12 3 7 8"/>
-                        <line x1="12" y1="3" x2="12" y2="15"/>
-                    </svg>
-                    Upload
-                </button>
-            </div>
-            <input type="file" id="upload1" accept="image/*" onchange="handleUpload(1, event)">
-            <div class="angle-display" id="angle1" style="display: none;">
-                <div class="angle-value" id="angleValue1">--°</div>
-                <div class="angle-label" id="angleLabel1">Joint Angle</div>
-            </div>
-        </div>
-
-        <div class="photo-card" id="card2">
-            <h3>📷 Photo 2</h3>
-            <div class="photo-container" id="container2">
-                <canvas id="canvas2"></canvas>
-                <div class="placeholder" id="placeholder2">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <polyline points="21 15 16 10 5 21"/>
-                    </svg>
-                    <span>Tap to add photo</span>
+            <div class="selector-row">
+                <span class="selector-label">Side:</span>
+                <div class="selector-buttons" id="sideSelector">
+                    <button class="selector-btn active" data-side="left">Left</button>
+                    <button class="selector-btn" data-side="right">Right</button>
                 </div>
             </div>
-            <div class="btn-group">
-                <button class="btn btn-primary" onclick="openCamera(2)">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                        <circle cx="12" cy="13" r="4"/>
-                    </svg>
-                    Camera
-                </button>
-                <button class="btn btn-secondary" onclick="document.getElementById('upload2').click()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="17 8 12 3 7 8"/>
-                        <line x1="12" y1="3" x2="12" y2="15"/>
-                    </svg>
-                    Upload
-                </button>
+        </div>
+
+        <div class="instructions">
+            <h4>📸 How to use:</h4>
+            <ol>
+                <li>Select or create a patient</li>
+                <li>Choose joint type and side</li>
+                <li>Capture extension (straightened) photo</li>
+                <li>Capture flexion (bent) photo</li>
+                <li>Save the visit to track progress!</li>
+            </ol>
+        </div>
+
+        <div class="photo-grid">
+            <div class="photo-card" id="card1">
+                <h3>📏 Extension</h3>
+                <div class="photo-container" id="container1">
+                    <canvas id="canvas1"></canvas>
+                    <div class="placeholder" id="placeholder1">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <span>Straightened position</span>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="openCamera(1)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                            <circle cx="12" cy="13" r="4"/>
+                        </svg>
+                        Camera
+                    </button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('upload1').click()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        Upload
+                    </button>
+                </div>
+                <input type="file" id="upload1" accept="image/*" onchange="handleUpload(1, event)">
+                <div class="angle-display" id="angle1" style="display: none;">
+                    <div class="angle-value" id="angleValue1">--°</div>
+                    <div class="angle-label" id="angleLabel1">Extension</div>
+                </div>
             </div>
-            <input type="file" id="upload2" accept="image/*" onchange="handleUpload(2, event)">
-            <div class="angle-display" id="angle2" style="display: none;">
-                <div class="angle-value" id="angleValue2">--°</div>
-                <div class="angle-label" id="angleLabel2">Joint Angle</div>
+
+            <div class="photo-card" id="card2">
+                <h3>🔄 Flexion</h3>
+                <div class="photo-container" id="container2">
+                    <canvas id="canvas2"></canvas>
+                    <div class="placeholder" id="placeholder2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <span>Bent position</span>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="openCamera(2)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                            <circle cx="12" cy="13" r="4"/>
+                        </svg>
+                        Camera
+                    </button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('upload2').click()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        Upload
+                    </button>
+                </div>
+                <input type="file" id="upload2" accept="image/*" onchange="handleUpload(2, event)">
+                <div class="angle-display" id="angle2" style="display: none;">
+                    <div class="angle-value" id="angleValue2">--°</div>
+                    <div class="angle-label" id="angleLabel2">Flexion</div>
+                </div>
             </div>
+        </div>
+
+        <div class="comparison-card" id="comparisonCard" style="display: none;">
+            <h3 id="comparisonTitle">📊 Range of Motion</h3>
+            <div class="comparison-stats">
+                <div class="stat">
+                    <div class="stat-value photo1" id="statAngle1">--°</div>
+                    <div class="stat-label">Extension</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value diff" id="statDiff">--°</div>
+                    <div class="stat-label">ROM</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value photo2" id="statAngle2">--°</div>
+                    <div class="stat-label">Flexion</div>
+                </div>
+            </div>
+            <div class="difference-bar">
+                <div class="big-diff" id="bigDiff">--°</div>
+                <div class="diff-label" id="diffLabel">Range of Motion</div>
+            </div>
+        </div>
+
+        <!-- Save Visit Section -->
+        <div class="save-visit-section" id="saveVisitSection" style="display: none;">
+            <h3>💾 Save Visit</h3>
+            <div class="visit-summary">
+                <div class="visit-stat">
+                    <div class="visit-stat-label">Extension</div>
+                    <div class="visit-stat-value" id="saveExtension">--°</div>
+                </div>
+                <div class="visit-stat">
+                    <div class="visit-stat-label">Flexion</div>
+                    <div class="visit-stat-value" id="saveFlexion">--°</div>
+                </div>
+            </div>
+            <button class="btn-save-visit" id="saveVisitBtn" onclick="saveVisit()">
+                Save Visit for Patient
+            </button>
+        </div>
+
+        <button class="reset-btn" onclick="resetMeasurements()">🔄 Reset Measurements</button>
+    </div>
+
+    <!-- History View -->
+    <div class="view" id="historyView">
+        <div class="history-section">
+            <h3>📈 Progress Over Time</h3>
+            
+            <!-- Progress Chart -->
+            <div class="progress-chart" id="progressChart">
+                <div class="chart-title">Angle Measurements by Visit</div>
+                <div class="chart-container" id="chartContainer">
+                    <!-- Bars will be dynamically inserted -->
+                </div>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <div class="legend-dot extension"></div>
+                        <span>Extension</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot flexion"></div>
+                        <span>Flexion</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 20px;">📋 Visit History</h3>
+            <div class="visit-list" id="visitList">
+                <div class="history-empty">No visits recorded yet</div>
+            </div>
+        </div>
+
+        <div class="data-management">
+            <button class="btn-small btn-new" onclick="exportPatientData()">📤 Export JSON</button>
+            <button class="btn-small btn-secondary" onclick="document.getElementById('importFile').click()">📥 Import</button>
+            <input type="file" id="importFile" accept=".json" onchange="importPatientData(event)" style="display:none">
         </div>
     </div>
 
-    <div class="comparison-card" id="comparisonCard" style="display: none;">
-        <h3 id="comparisonTitle">📊 Angle Comparison</h3>
-        <div class="comparison-stats">
-            <div class="stat">
-                <div class="stat-value photo1" id="statAngle1">--°</div>
-                <div class="stat-label">Photo 1</div>
+    <!-- New Patient Modal -->
+    <div class="modal-overlay hidden" id="newPatientModal">
+        <div class="modal-content">
+            <div class="modal-title">👤 New Patient</div>
+            <div class="modal-body">
+                <input type="text" class="modal-input" id="newPatientName" placeholder="Enter patient name..." maxlength="50">
             </div>
-            <div class="stat">
-                <div class="stat-value diff" id="statDiff">--°</div>
-                <div class="stat-label">Difference</div>
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" onclick="closeNewPatientModal()">Cancel</button>
+                <button class="modal-btn primary" onclick="createPatient()">Create</button>
             </div>
-            <div class="stat">
-                <div class="stat-value photo2" id="statAngle2">--°</div>
-                <div class="stat-label">Photo 2</div>
-            </div>
-        </div>
-        <div class="difference-bar">
-            <div class="big-diff" id="bigDiff">--°</div>
-            <div class="diff-label" id="diffLabel">Range of Motion</div>
         </div>
     </div>
-
-    <button class="reset-btn" onclick="resetAll()">🔄 Reset All</button>
 
     <div class="loading-overlay hidden" id="loadingOverlay">
         <div class="spinner"></div>
@@ -643,6 +1266,7 @@
     </div>
 
     <div class="error-toast hidden" id="errorToast"></div>
+    <div class="success-toast hidden" id="successToast"></div>
 
     <script>
         // State
@@ -653,42 +1277,444 @@
         let results = { 1: null, 2: null };
         let cameraStream = null;
         let facingMode = 'environment';
+        
+        // Patient data
+        let patients = {};
+        let currentPatientId = null;
+
+        // LocalStorage keys
+        const STORAGE_KEY = 'jointAnglePatients';
 
         // MediaPipe Pose landmark indices
         const LANDMARKS = {
             elbow: {
-                left: { start: 11, middle: 13, end: 15 },   // shoulder → elbow → wrist
+                left: { start: 11, middle: 13, end: 15 },
                 right: { start: 12, middle: 14, end: 16 }
             },
             knee: {
-                left: { start: 23, middle: 25, end: 27 },   // hip → knee → ankle
+                left: { start: 23, middle: 25, end: 27 },
                 right: { start: 24, middle: 26, end: 28 }
             }
         };
 
         // Joint-specific labels
         const JOINT_LABELS = {
-            elbow: {
-                name: 'Elbow',
-                start: 'shoulder',
-                middle: 'elbow',
-                end: 'wrist',
-                icon: '💪'
-            },
-            knee: {
-                name: 'Knee',
-                start: 'hip',
-                middle: 'knee',
-                end: 'ankle',
-                icon: '🦵'
-            }
+            elbow: { name: 'Elbow', icon: '💪' },
+            knee: { name: 'Knee', icon: '🦵' }
         };
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            loadPatients();
             initPose();
             setupSelectors();
+            updatePatientSelect();
         });
+
+        // ==================== Patient Management ====================
+
+        function loadPatients() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    patients = JSON.parse(stored);
+                }
+            } catch (e) {
+                console.error('Failed to load patients:', e);
+                patients = {};
+            }
+        }
+
+        function savePatients() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(patients));
+            } catch (e) {
+                console.error('Failed to save patients:', e);
+                showError('Failed to save data. Storage may be full.');
+            }
+        }
+
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+
+        function updatePatientSelect() {
+            const select = document.getElementById('patientSelect');
+            select.innerHTML = '<option value="">Select a patient...</option>';
+            
+            const sortedPatients = Object.entries(patients)
+                .sort((a, b) => a[1].name.localeCompare(b[1].name));
+            
+            sortedPatients.forEach(([id, patient]) => {
+                const option = document.createElement('option');
+                option.value = id;
+                option.textContent = patient.name;
+                if (id === currentPatientId) {
+                    option.selected = true;
+                }
+                select.appendChild(option);
+            });
+        }
+
+        function showNewPatientModal() {
+            document.getElementById('newPatientModal').classList.remove('hidden');
+            document.getElementById('newPatientName').value = '';
+            document.getElementById('newPatientName').focus();
+        }
+
+        function closeNewPatientModal() {
+            document.getElementById('newPatientModal').classList.add('hidden');
+        }
+
+        function createPatient() {
+            const name = document.getElementById('newPatientName').value.trim();
+            if (!name) {
+                showError('Please enter a patient name');
+                return;
+            }
+
+            const id = generateId();
+            patients[id] = {
+                name: name,
+                createdAt: new Date().toISOString(),
+                visits: []
+            };
+
+            savePatients();
+            updatePatientSelect();
+            
+            // Select the new patient
+            document.getElementById('patientSelect').value = id;
+            selectPatient();
+            
+            closeNewPatientModal();
+            showSuccess(`Patient "${name}" created!`);
+        }
+
+        function selectPatient() {
+            const select = document.getElementById('patientSelect');
+            currentPatientId = select.value || null;
+            
+            const infoDiv = document.getElementById('currentPatientInfo');
+            const viewToggle = document.getElementById('viewToggle');
+            
+            if (currentPatientId && patients[currentPatientId]) {
+                const patient = patients[currentPatientId];
+                document.getElementById('patientNameDisplay').textContent = patient.name;
+                
+                const visitCount = patient.visits.length;
+                const lastVisit = visitCount > 0 
+                    ? `Last visit: ${formatDate(patient.visits[0].date)}`
+                    : 'No visits yet';
+                document.getElementById('patientStats').textContent = 
+                    `${visitCount} visit${visitCount !== 1 ? 's' : ''} • ${lastVisit}`;
+                
+                infoDiv.classList.remove('hidden');
+                viewToggle.style.display = 'flex';
+                
+                updateSaveButton();
+                updateHistoryView();
+            } else {
+                infoDiv.classList.add('hidden');
+                viewToggle.style.display = 'none';
+                currentPatientId = null;
+            }
+        }
+
+        function deletePatient() {
+            if (!currentPatientId) return;
+            
+            const patient = patients[currentPatientId];
+            if (!confirm(`Delete patient "${patient.name}" and all their visit data?`)) {
+                return;
+            }
+
+            delete patients[currentPatientId];
+            currentPatientId = null;
+            savePatients();
+            updatePatientSelect();
+            selectPatient();
+            showSuccess('Patient deleted');
+        }
+
+        // ==================== Visit Management ====================
+
+        function saveVisit() {
+            if (!currentPatientId) {
+                showError('Please select a patient first');
+                return;
+            }
+
+            if (!results[1]?.angle || !results[2]?.angle) {
+                showError('Please capture both extension and flexion photos');
+                return;
+            }
+
+            const visit = {
+                id: generateId(),
+                date: new Date().toISOString(),
+                joint: selectedJoint,
+                side: selectedSide,
+                extension: results[1].angle,
+                flexion: results[2].angle,
+                rom: Math.abs(results[1].angle - results[2].angle)
+            };
+
+            // Add visit to beginning of array (newest first)
+            patients[currentPatientId].visits.unshift(visit);
+            savePatients();
+            
+            showSuccess('Visit saved successfully!');
+            selectPatient(); // Refresh stats
+            resetMeasurements();
+            switchView('history');
+        }
+
+        function updateSaveButton() {
+            const section = document.getElementById('saveVisitSection');
+            const btn = document.getElementById('saveVisitBtn');
+            
+            if (currentPatientId && results[1]?.angle && results[2]?.angle) {
+                section.style.display = 'block';
+                document.getElementById('saveExtension').textContent = `${results[1].angle}°`;
+                document.getElementById('saveFlexion').textContent = `${results[2].angle}°`;
+                btn.textContent = `Save Visit for ${patients[currentPatientId].name}`;
+                btn.disabled = false;
+            } else {
+                section.style.display = 'none';
+            }
+        }
+
+        // ==================== History & Progress ====================
+
+        function switchView(viewName) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(`${viewName}View`).classList.add('active');
+            document.querySelector(`[data-view="${viewName}"]`).classList.add('active');
+            
+            if (viewName === 'history') {
+                updateHistoryView();
+            }
+        }
+
+        function updateHistoryView() {
+            if (!currentPatientId || !patients[currentPatientId]) return;
+            
+            const patient = patients[currentPatientId];
+            const visits = patient.visits;
+            
+            updateProgressChart(visits);
+            updateVisitList(visits);
+        }
+
+        function updateProgressChart(visits) {
+            const container = document.getElementById('chartContainer');
+            const chartDiv = document.getElementById('progressChart');
+            
+            if (visits.length === 0) {
+                chartDiv.style.display = 'none';
+                return;
+            }
+            
+            chartDiv.style.display = 'block';
+            container.innerHTML = '';
+            
+            // Show last 6 visits in chronological order for the chart
+            const chartVisits = visits.slice(0, 6).reverse();
+            const maxAngle = 180;
+            
+            chartVisits.forEach((visit, index) => {
+                const group = document.createElement('div');
+                group.className = 'chart-bar-group';
+                
+                const bars = document.createElement('div');
+                bars.className = 'chart-bars';
+                
+                // Extension bar
+                const extBar = document.createElement('div');
+                extBar.className = 'chart-bar extension';
+                extBar.style.height = `${(visit.extension / maxAngle) * 100}px`;
+                extBar.title = `Extension: ${visit.extension}°`;
+                
+                // Flexion bar
+                const flexBar = document.createElement('div');
+                flexBar.className = 'chart-bar flexion';
+                flexBar.style.height = `${(visit.flexion / maxAngle) * 100}px`;
+                flexBar.title = `Flexion: ${visit.flexion}°`;
+                
+                bars.appendChild(extBar);
+                bars.appendChild(flexBar);
+                
+                const label = document.createElement('div');
+                label.className = 'chart-label';
+                label.textContent = formatDateShort(visit.date);
+                
+                group.appendChild(bars);
+                group.appendChild(label);
+                container.appendChild(group);
+            });
+        }
+
+        function updateVisitList(visits) {
+            const listContainer = document.getElementById('visitList');
+            
+            if (visits.length === 0) {
+                listContainer.innerHTML = '<div class="history-empty">No visits recorded yet. Take measurements to start tracking progress!</div>';
+                return;
+            }
+            
+            listContainer.innerHTML = '';
+            
+            visits.forEach((visit, index) => {
+                const item = document.createElement('div');
+                item.className = 'visit-item';
+                
+                const prevVisit = visits[index + 1]; // Next in array = previous chronologically
+                
+                // Calculate deltas
+                let deltaHtml = '';
+                if (prevVisit) {
+                    const extDelta = visit.extension - prevVisit.extension;
+                    const flexDelta = visit.flexion - prevVisit.flexion;
+                    const romDelta = visit.rom - prevVisit.rom;
+                    
+                    deltaHtml = `
+                        <div class="visit-deltas">
+                            ${formatDelta('Ext', extDelta)}
+                            ${formatDelta('Flex', flexDelta)}
+                            ${formatDelta('ROM', romDelta)}
+                        </div>
+                    `;
+                }
+                
+                const jointInfo = JOINT_LABELS[visit.joint] || JOINT_LABELS.elbow;
+                const badgeText = index === 0 ? 'Latest' : `Visit ${visits.length - index}`;
+                
+                item.innerHTML = `
+                    <div class="visit-header">
+                        <div class="visit-date">${formatDate(visit.date)}</div>
+                        <div class="visit-badge">${badgeText}</div>
+                    </div>
+                    <div style="font-size: 0.75rem; color: #8892b0; margin-bottom: 8px;">
+                        ${jointInfo.icon} ${jointInfo.name} • ${visit.side.charAt(0).toUpperCase() + visit.side.slice(1)}
+                    </div>
+                    <div class="visit-angles">
+                        <div class="visit-angle">
+                            <div class="visit-angle-label">Extension</div>
+                            <div class="visit-angle-value extension">${visit.extension}°</div>
+                        </div>
+                        <div class="visit-angle">
+                            <div class="visit-angle-label">Flexion</div>
+                            <div class="visit-angle-value flexion">${visit.flexion}°</div>
+                        </div>
+                        <div class="visit-angle">
+                            <div class="visit-angle-label">ROM</div>
+                            <div class="visit-angle-value rom">${visit.rom}°</div>
+                        </div>
+                    </div>
+                    ${deltaHtml}
+                `;
+                
+                listContainer.appendChild(item);
+            });
+        }
+
+        function formatDelta(label, value) {
+            if (value === 0) {
+                return `<span class="delta-badge neutral">${label}: ±0°</span>`;
+            }
+            const sign = value > 0 ? '+' : '';
+            const className = value > 0 ? 'positive' : 'negative';
+            return `<span class="delta-badge ${className}">${label}: ${sign}${value}°</span>`;
+        }
+
+        function formatDate(isoString) {
+            const date = new Date(isoString);
+            return date.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric' 
+            });
+        }
+
+        function formatDateShort(isoString) {
+            const date = new Date(isoString);
+            return date.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric'
+            });
+        }
+
+        // ==================== Data Export/Import ====================
+
+        function exportPatientData() {
+            if (!currentPatientId) {
+                // Export all patients
+                const dataStr = JSON.stringify(patients, null, 2);
+                downloadJSON(dataStr, 'joint-angle-all-patients.json');
+                showSuccess('All patient data exported!');
+            } else {
+                // Export current patient only
+                const patient = patients[currentPatientId];
+                const exportData = {
+                    [currentPatientId]: patient
+                };
+                const dataStr = JSON.stringify(exportData, null, 2);
+                const safeName = patient.name.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+                downloadJSON(dataStr, `joint-angle-${safeName}.json`);
+                showSuccess(`Data exported for ${patient.name}!`);
+            }
+        }
+
+        function downloadJSON(content, filename) {
+            const blob = new Blob([content], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function importPatientData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    let importCount = 0;
+                    
+                    Object.entries(imported).forEach(([id, patient]) => {
+                        if (patient.name && Array.isArray(patient.visits)) {
+                            // Generate new ID to avoid conflicts
+                            const newId = generateId();
+                            patients[newId] = patient;
+                            importCount++;
+                        }
+                    });
+                    
+                    if (importCount > 0) {
+                        savePatients();
+                        updatePatientSelect();
+                        showSuccess(`Imported ${importCount} patient(s)!`);
+                    } else {
+                        showError('No valid patient data found in file');
+                    }
+                } catch (err) {
+                    showError('Invalid JSON file');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = ''; // Reset file input
+        }
+
+        // ==================== Pose Detection ====================
 
         function showLoading(text = 'Processing...') {
             document.getElementById('loadingOverlay').classList.remove('hidden');
@@ -701,6 +1727,13 @@
 
         function showError(message) {
             const toast = document.getElementById('errorToast');
+            toast.textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3000);
+        }
+
+        function showSuccess(message) {
+            const toast = document.getElementById('successToast');
             toast.textContent = message;
             toast.classList.remove('hidden');
             setTimeout(() => toast.classList.add('hidden'), 3000);
@@ -725,7 +1758,6 @@
 
                 pose.onResults(onPoseResults);
 
-                // Warm up the model
                 const tempCanvas = document.createElement('canvas');
                 tempCanvas.width = 100;
                 tempCanvas.height = 100;
@@ -740,7 +1772,6 @@
         }
 
         function setupSelectors() {
-            // Joint selector (elbow/knee)
             document.querySelectorAll('#jointSelector .selector-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     document.querySelectorAll('#jointSelector .selector-btn').forEach(b => b.classList.remove('active'));
@@ -748,20 +1779,17 @@
                     selectedJoint = btn.dataset.joint;
                     updateLabels();
                     
-                    // Re-analyze existing photos with new joint selection
                     if (results[1]?.image) processImage(results[1].image, 1);
                     if (results[2]?.image) processImage(results[2].image, 2);
                 });
             });
 
-            // Side selector (left/right)
             document.querySelectorAll('#sideSelector .selector-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     document.querySelectorAll('#sideSelector .selector-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     selectedSide = btn.dataset.side;
                     
-                    // Re-analyze existing photos with new side selection
                     if (results[1]?.image) processImage(results[1].image, 1);
                     if (results[2]?.image) processImage(results[2].image, 2);
                 });
@@ -772,14 +1800,9 @@
 
         function updateLabels() {
             const jointInfo = JOINT_LABELS[selectedJoint];
-            const capitalizedJoint = jointInfo.name;
-            
-            // Update angle display labels
-            document.getElementById('angleLabel1').textContent = `${capitalizedJoint} Angle`;
-            document.getElementById('angleLabel2').textContent = `${capitalizedJoint} Angle`;
-            
-            // Update comparison title
-            document.getElementById('comparisonTitle').textContent = `📊 ${capitalizedJoint} Angle Comparison`;
+            document.getElementById('angleLabel1').textContent = `${jointInfo.name} Extension`;
+            document.getElementById('angleLabel2').textContent = `${jointInfo.name} Flexion`;
+            document.getElementById('comparisonTitle').textContent = `📊 ${jointInfo.name} Range of Motion`;
         }
 
         function getJointPartName() {
@@ -789,8 +1812,7 @@
 
         function openCamera(slot) {
             currentPhotoSlot = slot;
-            const modal = document.getElementById('cameraModal');
-            modal.classList.remove('hidden');
+            document.getElementById('cameraModal').classList.remove('hidden');
             startCamera();
         }
 
@@ -805,8 +1827,7 @@
                     audio: false
                 });
 
-                const video = document.getElementById('cameraVideo');
-                video.srcObject = cameraStream;
+                document.getElementById('cameraVideo').srcObject = cameraStream;
             } catch (error) {
                 showError('Camera access denied. Please allow camera access.');
                 closeCamera();
@@ -861,10 +1882,8 @@
             const jointInfo = JOINT_LABELS[selectedJoint];
             showLoading(`Detecting ${jointInfo.name.toLowerCase()} pose...`);
 
-            // Store image for re-analysis
             results[slot] = { image: img, angle: null, landmarks: null };
 
-            // Create temp canvas for pose detection
             const tempCanvas = document.createElement('canvas');
             const maxSize = 640;
             let width = img.width;
@@ -909,7 +1928,6 @@
             const middlePoint = landmarks[indices.middle];
             const endPoint = landmarks[indices.end];
 
-            // Check visibility
             const minVisibility = 0.5;
             if (startPoint.visibility < minVisibility || 
                 middlePoint.visibility < minVisibility || 
@@ -919,7 +1937,6 @@
                 return;
             }
 
-            // Calculate angle
             const angle = calculateAngle(startPoint, middlePoint, endPoint);
             
             results[slot].angle = angle;
@@ -933,6 +1950,7 @@
 
             drawResult(slot);
             updateComparison();
+            updateSaveButton();
             hideLoading();
         }
 
@@ -960,7 +1978,6 @@
             const placeholder = document.getElementById(`placeholder${slot}`);
             const card = document.getElementById(`card${slot}`);
             
-            // Set canvas size to match container aspect ratio
             const containerRect = container.getBoundingClientRect();
             canvas.width = containerRect.width * window.devicePixelRatio;
             canvas.height = containerRect.height * window.devicePixelRatio;
@@ -971,7 +1988,6 @@
             const displayWidth = containerRect.width;
             const displayHeight = containerRect.height;
             
-            // Calculate image fit
             const imgAspect = img.width / img.height;
             const containerAspect = displayWidth / displayHeight;
             
@@ -989,10 +2005,8 @@
                 offsetY = 0;
             }
 
-            // Draw image
             ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
 
-            // Draw overlay
             if (landmarks) {
                 const scaleX = drawWidth;
                 const scaleY = drawHeight;
@@ -1003,7 +2017,6 @@
                     end: { x: offsetX + landmarks.end.x * scaleX, y: offsetY + landmarks.end.y * scaleY }
                 };
 
-                // Draw lines - color based on joint type
                 const lineColor = result.jointType === 'knee' ? '#ff6b9d' : '#00ff88';
                 ctx.strokeStyle = lineColor;
                 ctx.lineWidth = 3;
@@ -1015,7 +2028,6 @@
                 ctx.lineTo(points.end.x, points.end.y);
                 ctx.stroke();
 
-                // Draw points - different colors for each landmark
                 const colors = { start: '#00d9ff', middle: '#ff6b9d', end: '#ffbe0b' };
                 
                 Object.entries(points).forEach(([name, point]) => {
@@ -1028,7 +2040,6 @@
                     ctx.stroke();
                 });
 
-                // Draw angle arc
                 const arcRadius = 25;
                 const startAngle = Math.atan2(points.start.y - points.middle.y, points.start.x - points.middle.x);
                 const endAngle = Math.atan2(points.end.y - points.middle.y, points.end.x - points.middle.x);
@@ -1039,7 +2050,6 @@
                 ctx.lineWidth = 2;
                 ctx.stroke();
 
-                // Draw angle text
                 const textX = points.middle.x + Math.cos((startAngle + endAngle) / 2) * (arcRadius + 15);
                 const textY = points.middle.y + Math.sin((startAngle + endAngle) / 2) * (arcRadius + 15);
                 
@@ -1051,7 +2061,6 @@
                 ctx.fillText(`${result.angle}°`, textX - 15, textY + 5);
             }
 
-            // Update UI
             placeholder.style.display = 'none';
             card.classList.add('has-result');
             
@@ -1060,7 +2069,9 @@
             const angleLabel = document.getElementById(`angleLabel${slot}`);
             angleDisplay.style.display = 'block';
             angleValue.textContent = `${result.angle}°`;
-            angleLabel.textContent = `${jointInfo.name} Angle`;
+            
+            const positionLabel = slot === 1 ? 'Extension' : 'Flexion';
+            angleLabel.textContent = `${jointInfo.name} ${positionLabel}`;
         }
 
         function updateComparison() {
@@ -1077,14 +2088,14 @@
                 document.getElementById('bigDiff').textContent = `${diff}°`;
                 
                 const diffLabel = document.getElementById('diffLabel');
-                if (diff < 5) {
-                    diffLabel.textContent = 'Nearly identical angles! ✨';
-                } else if (diff < 15) {
-                    diffLabel.textContent = 'Small difference in range';
-                } else if (diff < 30) {
-                    diffLabel.textContent = 'Moderate difference';
+                if (diff < 20) {
+                    diffLabel.textContent = 'Limited range of motion';
+                } else if (diff < 60) {
+                    diffLabel.textContent = 'Moderate range of motion';
+                } else if (diff < 100) {
+                    diffLabel.textContent = 'Good range of motion! 👍';
                 } else {
-                    diffLabel.textContent = 'Significant range of motion! 💪';
+                    diffLabel.textContent = 'Excellent range of motion! 💪';
                 }
 
                 comparisonCard.style.display = 'block';
@@ -1093,7 +2104,7 @@
             }
         }
 
-        function resetAll() {
+        function resetMeasurements() {
             results = { 1: null, 2: null };
             
             [1, 2].forEach(slot => {
@@ -1108,7 +2119,15 @@
             });
 
             document.getElementById('comparisonCard').style.display = 'none';
+            document.getElementById('saveVisitSection').style.display = 'none';
         }
+
+        // Handle Enter key in new patient modal
+        document.getElementById('newPatientName').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                createPatient();
+            }
+        });
     </script>
 </body>
 </html>
